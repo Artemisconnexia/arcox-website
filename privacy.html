@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — Kiff Me</title>
+  <meta name="description" content="Politique de confidentialité de l'application Kiff Me, éditée par Artemis Connexia (Arcox).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --violet: #6C3FC5;
+      --violet-dark: #4C1D95;
+      --rose: #F472B6;
+      --cream: #FDF8F5;
+      --dark: #0F0A1E;
+      --text: #2D1B5E;
+      --text-muted: #7C6FA0;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(253, 248, 245, 0.95);
+      border-bottom: 1px solid rgba(108, 63, 197, 0.08);
+      position: sticky; top: 0; z-index: 10;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.4rem;
+      color: var(--violet-dark); text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-logo span { color: var(--rose); }
+
+    .nav-back {
+      font-size: 0.85rem; color: var(--text-muted);
+      text-decoration: none; display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--violet); }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(108, 63, 197, 0.1);
+    }
+
+    .page-tag {
+      display: inline-block;
+      background: rgba(108, 63, 197, 0.08);
+      color: var(--violet);
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--dark); margin-bottom: 0.75rem;
+    }
+
+    .page-meta { font-size: 0.85rem; color: var(--text-muted); }
+
+    .toc {
+      background: white;
+      border: 1px solid rgba(108, 63, 197, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .toc h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+
+    .toc ol {
+      list-style: none; counter-reset: toc;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+
+    .toc li { counter-increment: toc; }
+
+    .toc a {
+      display: flex; align-items: center; gap: 0.75rem;
+      color: var(--violet); text-decoration: none;
+      font-size: 0.9rem; transition: opacity 0.2s;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 0.75rem; color: var(--text-muted);
+      font-weight: 500; min-width: 24px;
+    }
+
+    .toc a:hover { opacity: 0.7; }
+
+    .prose section { margin-bottom: 3rem; }
+
+    .prose h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+
+    .prose h2 .num {
+      font-size: 0.75rem; font-weight: 600;
+      background: rgba(108, 63, 197, 0.08);
+      color: var(--violet); padding: 0.25rem 0.6rem;
+      border-radius: 6px; font-family: 'DM Sans', sans-serif;
+    }
+
+    .prose p {
+      font-size: 0.95rem; line-height: 1.8;
+      color: #4A3B6E; margin-bottom: 1rem;
+    }
+
+    .prose ul, .prose ol {
+      padding-left: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .prose li {
+      font-size: 0.95rem; line-height: 1.7; color: #4A3B6E;
+    }
+
+    .prose strong { color: var(--text); font-weight: 500; }
+
+    .prose a { color: var(--violet); text-decoration: underline; }
+
+    .info-box {
+      background: rgba(108, 63, 197, 0.05);
+      border: 1px solid rgba(108, 63, 197, 0.12);
+      border-left: 3px solid var(--violet);
+      border-radius: 0 12px 12px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-box p { margin: 0; font-size: 0.9rem; }
+
+    .contact-block {
+      background: linear-gradient(135deg, var(--violet-dark), var(--violet));
+      border-radius: 16px; padding: 2rem;
+      color: white; margin-top: 1.5rem;
+    }
+
+    .contact-block p { color: rgba(255,255,255,0.8); margin-bottom: 0.75rem; }
+
+    .contact-block a {
+      color: var(--rose); font-weight: 500;
+      text-decoration: none;
+    }
+
+    .contact-block a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .container { padding: 2rem 1.5rem 4rem; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Arc<span>ox</span></a>
+  <a href="index.html" class="nav-back">← Retour au site</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="page-tag">Kiff Me</div>
+    <h1>Politique de confidentialité</h1>
+    <p class="page-meta">Dernière mise à jour : avril 2025 · Artemis Connexia (Arcox)</p>
+  </div>
+
+  <div class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#s1">Informations que nous collectons</a></li>
+      <li><a href="#s2">Comment nous utilisons vos données</a></li>
+      <li><a href="#s3">Partage des données</a></li>
+      <li><a href="#s4">Sécurité des données</a></li>
+      <li><a href="#s5">Conservation des données</a></li>
+      <li><a href="#s6">Vos droits</a></li>
+      <li><a href="#s7">Données des mineurs</a></li>
+      <li><a href="#s8">Modifications de cette politique</a></li>
+      <li><a href="#s9">Nous contacter</a></li>
+    </ol>
+  </div>
+
+  <div class="prose">
+
+    <p>La présente politique de confidentialité décrit comment <strong>Artemis Connexia</strong>, opérant sous le nom commercial <strong>Arcox</strong>, collecte, utilise et protège vos informations personnelles lorsque vous utilisez l'application mobile <strong>Kiff Me</strong>.</p>
+
+    <p>En utilisant Kiff Me, vous acceptez les pratiques décrites dans cette politique. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'application.</p>
+
+    <section id="s1">
+      <h2><span class="num">01</span> Informations que nous collectons</h2>
+      <p>Nous collectons les informations suivantes lorsque vous créez un compte et utilisez Kiff Me :</p>
+      <p><strong>Informations de profil :</strong></p>
+      <ul>
+        <li>Nom et prénom</li>
+        <li>Adresse e-mail</li>
+        <li>Date de naissance</li>
+        <li>Genre et préférences de rencontre</li>
+        <li>Photos de profil</li>
+        <li>Localisation géographique (ville ou région)</li>
+        <li>Informations optionnelles : profession, niveau d'éducation, description personnelle</li>
+      </ul>
+      <p><strong>Données d'utilisation :</strong></p>
+      <ul>
+        <li>Interactions avec d'autres profils (likes, dislikes, matches)</li>
+        <li>Messages échangés via la messagerie intégrée</li>
+        <li>Messages vocaux envoyés</li>
+        <li>Date et heure de connexion</li>
+      </ul>
+      <p><strong>Données de vérification :</strong></p>
+      <ul>
+        <li>Vidéo de vérification d'identité (utilisée uniquement pour la vérification, non stockée publiquement)</li>
+      </ul>
+    </section>
+
+    <section id="s2">
+      <h2><span class="num">02</span> Comment nous utilisons vos données</h2>
+      <p>Vos données sont utilisées pour :</p>
+      <ul>
+        <li>Créer et gérer votre compte utilisateur</li>
+        <li>Afficher votre profil aux autres utilisateurs selon vos préférences</li>
+        <li>Vous suggérer des profils compatibles</li>
+        <li>Permettre la communication entre utilisateurs matchés</li>
+        <li>Vérifier l'authenticité des profils</li>
+        <li>Améliorer les fonctionnalités de l'application</li>
+        <li>Envoyer des notifications liées à l'activité sur votre compte</li>
+        <li>Détecter et prévenir les comportements abusifs ou frauduleux</li>
+      </ul>
+      <div class="info-box">
+        <p><strong>Important :</strong> Nous ne vendons jamais vos données personnelles à des tiers à des fins publicitaires ou commerciales.</p>
+      </div>
+    </section>
+
+    <section id="s3">
+      <h2><span class="num">03</span> Partage des données</h2>
+      <p>Nous partageons vos données uniquement dans les cas suivants :</p>
+      <ul>
+        <li><strong>Avec les autres utilisateurs :</strong> Les informations de votre profil public (photos, prénom, âge, ville) sont visibles par les autres utilisateurs de l'application.</li>
+        <li><strong>Avec nos prestataires techniques :</strong> Nous utilisons Firebase (Google) pour l'hébergement des données et l'authentification. Ces services sont soumis à leurs propres politiques de confidentialité.</li>
+        <li><strong>Pour des obligations légales :</strong> Nous pouvons divulguer vos données si la loi l'exige ou pour protéger les droits et la sécurité de nos utilisateurs.</li>
+      </ul>
+    </section>
+
+    <section id="s4">
+      <h2><span class="num">04</span> Sécurité des données</h2>
+      <p>Nous mettons en œuvre des mesures de sécurité pour protéger vos données :</p>
+      <ul>
+        <li>Chiffrement des données en transit (HTTPS/TLS)</li>
+        <li>Authentification sécurisée via Firebase Authentication</li>
+        <li>Suppression de compte sécurisée (désactivation du profil)</li>
+        <li>Accès restreint aux données par notre équipe</li>
+      </ul>
+      <p>Cependant, aucun système de sécurité n'est infaillible. Nous vous encourageons à utiliser un mot de passe fort et à ne pas partager vos identifiants.</p>
+    </section>
+
+    <section id="s5">
+      <h2><span class="num">05</span> Conservation des données</h2>
+      <p>Vos données sont conservées tant que votre compte est actif. En cas de suppression de votre compte :</p>
+      <ul>
+        <li>Votre profil est désactivé et n'est plus visible par les autres utilisateurs</li>
+        <li>Vos données personnelles sont supprimées dans un délai de 30 jours</li>
+        <li>Les messages échangés peuvent être conservés pour des raisons de sécurité pendant une durée maximale de 90 jours</li>
+      </ul>
+    </section>
+
+    <section id="s6">
+      <h2><span class="num">06</span> Vos droits</h2>
+      <p>Conformément à la réglementation applicable, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> Vous pouvez demander une copie de vos données personnelles.</li>
+        <li><strong>Droit de rectification :</strong> Vous pouvez modifier vos informations directement dans l'application.</li>
+        <li><strong>Droit à l'effacement :</strong> Vous pouvez supprimer votre compte depuis les paramètres de l'application.</li>
+        <li><strong>Droit d'opposition :</strong> Vous pouvez vous opposer à certains traitements de vos données.</li>
+        <li><strong>Droit à la portabilité :</strong> Vous pouvez demander l'export de vos données.</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous à <a href="/cdn-cgi/l/email-protection#6b181e1b1b04191f2b0a1908041345050e1f"><span class="__cf_email__" data-cfemail="ec9f999c9c839e98ac8d9e8f8394c2828998">[email&#160;protected]</span></a>.</p>
+    </section>
+
+    <section id="s7">
+      <h2><span class="num">07</span> Données des mineurs</h2>
+      <p>Kiff Me est une application réservée aux personnes âgées de <strong>18 ans et plus</strong>. Nous ne collectons pas sciemment de données personnelles de mineurs.</p>
+      <p>Si vous pensez qu'un mineur utilise notre application, contactez-nous immédiatement à <a href="/cdn-cgi/l/email-protection#72010702021d0006321300111d0a5c1c1706"><span class="__cf_email__" data-cfemail="e5969095958a9791a58497868a9dcb8b8091">[email&#160;protected]</span></a> afin que nous puissions prendre les mesures appropriées.</p>
+    </section>
+
+    <section id="s8">
+      <h2><span class="num">08</span> Modifications de cette politique</h2>
+      <p>Nous pouvons mettre à jour cette politique de confidentialité à tout moment. En cas de modification importante, nous vous en informerons via une notification dans l'application ou par e-mail.</p>
+      <p>La date de la dernière mise à jour est indiquée en haut de cette page. Nous vous encourageons à consulter régulièrement cette page.</p>
+    </section>
+
+    <section id="s9">
+      <h2><span class="num">09</span> Nous contacter</h2>
+      <p>Pour toute question relative à cette politique de confidentialité ou à vos données personnelles, contactez-nous :</p>
+      <div class="contact-block">
+        <p><strong style="color:white">Artemis Connexia (Arcox)</strong></p>
+        <p>Lomé, Togo</p>
+        <p>Email :
