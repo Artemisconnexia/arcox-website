@@ -192,7 +192,7 @@
     footer{background:var(--dark-2);padding:3rem 5% 1.5rem;border-top:1px solid rgba(255,255,255,.05)}
     .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
     .footer-brand-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem}
-    .footer-brand-logo img{width:72px;height:72px;object-fit:contain}
+    .footer-brand-logo img{width:66px;height:66px;object-fit:contain}
     .footer-brand .full{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3)}
     .footer-brand .sigle{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.03em}
     .footer-brand .sigle span{color:var(--rose)}
@@ -482,7 +482,7 @@
     <p class="contact-desc">Un projet digital ? Une question sur Kiff Me ? Un partenariat ? Nous sommes à votre écoute.</p>
     <div class="contact-info-row">
       <div class="contact-info-item">📍 Lomé, Togo — Afrique de l'Ouest</div>
-      <div class="contact-info-item">✉️ <a href="/cdn-cgi/l/email-protection#d1a2a4a1a1bea3a591b0a3b2bea9ffbfb4a5" style="color:var(--rose);text-decoration:none"><span class="__cf_email__" data-cfemail="4f3c3a3f3f203d3b0f2e3d2c203761212a3b">[email&#160;protected]</span></a></div>
+      <div class="contact-info-item">✉️ <a href="mailto:support@arcox.net" style="color:var(--rose);text-decoration:none">support@arcox.net</a></div>
     </div>
     <button class="btn-contact-open" onclick="openModal()">Envoyer un message →</button>
   </div>
@@ -543,7 +543,7 @@
   <div class="side-panel-header">
     <div>
       <h3>Nous contacter</h3>
-      <p>Réponse sous 48h · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e2919792928d9096a28390818d9acc8c8796">[email&#160;protected]</a></p>
+      <p>Réponse sous 48h · support@arcox.net</p>
     </div>
     <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
@@ -578,7 +578,7 @@
   <button class="btn-submit" onclick="handleSubmit(event)">Envoyer le message →</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
   function openModal(){
     document.getElementById('sidePanel').classList.add('open');
@@ -590,4 +590,13 @@
     document.getElementById('sideOverlay').classList.remove('open');
     document.body.style.overflow='';
   }
-  function handleS
+  function handleSubmit(e){
+    const btn=e.target;
+    btn.textContent='Message envoyé ✓';
+    btn.style.background='linear-gradient(135deg,#065F46,#10B981)';
+    setTimeout(()=>{btn.textContent='Envoyer le message →';btn.style.background='';closePanel()},2500);
+  }
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel()});
+</script>
+</body>
+</html>
