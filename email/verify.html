@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérification email — Kiff Me</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0F0A1E;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #1A1030;
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 36px;
+    }
+    .icon.success { background: linear-gradient(135deg, #6C3FC5, #F472B6); }
+    .icon.error { background: rgba(255,255,255,0.1); }
+    .icon.loading { background: linear-gradient(135deg, #6C3FC5, #F472B6); }
+    h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.6; margin-bottom: 32px; }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #FF4E8C, #7B2FBE);
+      color: white;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+    }
+    .btn:hover { opacity: 0.9; }
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FF4E8C, #7B2FBE);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 32px;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Kiff Me 💘</div>
+    <div class="icon loading" id="icon">
+      <div class="spinner" id="spinner"></div>
+    </div>
+    <h1 id="title">Vérification en cours...</h1>
+    <p id="message">Nous vérifions ton adresse email. Patiente un instant...</p>
+    <div id="btn-container"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+    import { getAuth, applyActionCode } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAu7WCuI5NjM6Ntt93hfDHGRAwch2Xu8zs",
+      authDomain: "kiff-me-3008f.firebaseapp.com",
+      projectId: "kiff-me-3008f",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const icon = document.getElementById('icon');
+    const spinner = document.getElementById('spinner');
+    const title = document.getElementById('title');
+    const message = document.getElementById('message');
+    const btnContainer = document.getElementById('btn-container');
+
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const oobCode = params.get('oobCode');
+
+    function showSuccess() {
+      icon.className = 'icon success';
+      spinner.style.display = 'none';
+      icon.textContent = '✅';
+      title.textContent = 'Email vérifié ! 🎉';
+      message.textContent = 'Ton adresse email a été vérifiée avec succès. Tu peux maintenant utiliser Kiff Me !';
+      btnContainer.innerHTML = '<a href="kiffme://email/verified" class="btn">Ouvrir Kiff Me 💘</a>';
+    }
+
+    function showError(msg) {
+      icon.className = 'icon error';
+      spinner.style.display = 'none';
+      icon.textContent = '❌';
+      title.textContent = 'Lien invalide';
+      message.textContent = msg || 'Ce lien est invalide ou a expiré. Demande un nouvel email de vérification depuis l\'application.';
+      btnContainer.innerHTML = '<a href="kiffme://" class="btn">Retourner dans l\'app</a>';
+    }
+
+    if (mode === 'verifyEmail' && oobCode) {
+      applyActionCode(auth, oobCode)
+        .then(() => showSuccess())
+        .catch(() => showError('Ce lien de vérification est invalide ou a expiré.'));
+    } else {
+      showError('Lien de vérification manquant ou invalide.');
+    }
+  </script>
+</body>
+</html>
