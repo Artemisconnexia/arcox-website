@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vérification email — Kiff Me</title>
+  <title>Kiff Me — Action email</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -26,8 +26,7 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
     .icon {
-      width: 80px;
-      height: 80px;
+      width: 80px; height: 80px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -54,6 +53,10 @@
       width: 100%;
     }
     .btn:hover { opacity: 0.9; }
+    .btn.secondary {
+      background: rgba(255,255,255,0.1);
+      margin-top: 12px;
+    }
     .logo {
       font-size: 28px;
       font-weight: 800;
@@ -63,8 +66,7 @@
       margin-bottom: 32px;
     }
     .spinner {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border: 3px solid rgba(255,255,255,0.2);
       border-top-color: white;
       border-radius: 50%;
@@ -72,6 +74,20 @@
       margin: 0 auto;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: white;
+      font-size: 15px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    input::placeholder { color: rgba(255,255,255,0.4); }
+    input:focus { border-color: #FF4E8C; }
+    .error-msg { color: #FF4E8C; font-size: 13px; margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -80,14 +96,14 @@
     <div class="icon loading" id="icon">
       <div class="spinner" id="spinner"></div>
     </div>
-    <h1 id="title">Vérification en cours...</h1>
-    <p id="message">Nous vérifions ton adresse email. Patiente un instant...</p>
-    <div id="btn-container"></div>
+    <h1 id="title">Chargement...</h1>
+    <p id="message">Patiente un instant...</p>
+    <div id="content"></div>
   </div>
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-    import { getAuth, applyActionCode } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+    import { getAuth, applyActionCode, confirmPasswordReset, verifyPasswordResetCode } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyAu7WCuI5NjM6Ntt93hfDHGRAwch2Xu8zs",
@@ -102,36 +118,103 @@
     const spinner = document.getElementById('spinner');
     const title = document.getElementById('title');
     const message = document.getElementById('message');
-    const btnContainer = document.getElementById('btn-container');
+    const content = document.getElementById('content');
 
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
     const oobCode = params.get('oobCode');
 
-    function showSuccess() {
-      icon.className = 'icon success';
+    function setIcon(type, emoji) {
+      icon.className = `icon ${type}`;
       spinner.style.display = 'none';
-      icon.textContent = '✅';
-      title.textContent = 'Email vérifié ! 🎉';
-      message.textContent = 'Ton adresse email a été vérifiée avec succès. Tu peux maintenant utiliser Kiff Me !';
-      btnContainer.innerHTML = '<a href="kiffme://email/verified" class="btn">Ouvrir Kiff Me 💘</a>';
+      icon.textContent = emoji;
     }
 
-    function showError(msg) {
-      icon.className = 'icon error';
-      spinner.style.display = 'none';
-      icon.textContent = '❌';
-      title.textContent = 'Lien invalide';
-      message.textContent = msg || 'Ce lien est invalide ou a expiré. Demande un nouvel email de vérification depuis l\'application.';
-      btnContainer.innerHTML = '<a href="kiffme://" class="btn">Retourner dans l\'app</a>';
+    function showSuccess(t, msg, btnText, btnHref) {
+      setIcon('success', '✅');
+      title.textContent = t;
+      message.textContent = msg;
+      content.innerHTML = `<a href="${btnHref}" class="btn">${btnText}</a>`;
     }
 
+    function showError(t, msg) {
+      setIcon('error', '❌');
+      title.textContent = t;
+      message.textContent = msg;
+      content.innerHTML = `<a href="kiffme://" class="btn">Retourner dans l'app</a>`;
+    }
+
+    // ── Mode vérification email ──
     if (mode === 'verifyEmail' && oobCode) {
       applyActionCode(auth, oobCode)
-        .then(() => showSuccess())
-        .catch(() => showError('Ce lien de vérification est invalide ou a expiré.'));
-    } else {
-      showError('Lien de vérification manquant ou invalide.');
+        .then(() => showSuccess(
+          'Email vérifié ! 🎉',
+          'Ton adresse email a été vérifiée avec succès. Tu peux maintenant utiliser Kiff Me !',
+          'Ouvrir Kiff Me 💘',
+          'kiffme://email/verified'
+        ))
+        .catch(() => showError(
+          'Lien invalide',
+          'Ce lien de vérification est invalide ou a expiré. Demande un nouvel email depuis l\'application.'
+        ));
+    }
+
+    // ── Mode réinitialisation mot de passe ──
+    else if (mode === 'resetPassword' && oobCode) {
+      verifyPasswordResetCode(auth, oobCode)
+        .then(() => {
+          setIcon('success', '🔒');
+          title.textContent = 'Nouveau mot de passe';
+          message.textContent = 'Choisis un nouveau mot de passe pour ton compte Kiff Me.';
+          content.innerHTML = `
+            <input type="password" id="pwd1" placeholder="Nouveau mot de passe" />
+            <input type="password" id="pwd2" placeholder="Confirme le mot de passe" />
+            <p class="error-msg" id="err"></p>
+            <button class="btn" onclick="resetPwd()">Enregistrer 🔒</button>
+          `;
+          window.resetPwd = async () => {
+            const pwd1 = document.getElementById('pwd1').value;
+            const pwd2 = document.getElementById('pwd2').value;
+            const err = document.getElementById('err');
+            if (pwd1.length < 6) { err.textContent = 'Le mot de passe doit faire au moins 6 caractères'; return; }
+            if (pwd1 !== pwd2) { err.textContent = 'Les mots de passe ne correspondent pas'; return; }
+            try {
+              await confirmPasswordReset(auth, oobCode, pwd1);
+              showSuccess(
+                'Mot de passe modifié ! ✅',
+                'Ton mot de passe a été mis à jour. Tu peux maintenant te connecter.',
+                'Se connecter 💘',
+                'kiffme://login'
+              );
+            } catch (e) {
+              err.textContent = 'Erreur. Ce lien est peut-être expiré.';
+            }
+          };
+        })
+        .catch(() => showError(
+          'Lien invalide',
+          'Ce lien de réinitialisation est invalide ou a expiré. Demande un nouveau lien depuis l\'application.'
+        ));
+    }
+
+    // ── Mode récupération email ──
+    else if (mode === 'recoverEmail' && oobCode) {
+      applyActionCode(auth, oobCode)
+        .then(() => showSuccess(
+          'Email restauré ! ✅',
+          'Ton adresse email précédente a été restaurée avec succès.',
+          'Retourner dans l\'app',
+          'kiffme://'
+        ))
+        .catch(() => showError(
+          'Lien invalide',
+          'Ce lien est invalide ou a expiré.'
+        ));
+    }
+
+    // ── Mode inconnu ──
+    else {
+      showError('Lien invalide', 'Ce lien est invalide ou manquant.');
     }
   </script>
 </body>
